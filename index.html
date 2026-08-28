@@ -141,7 +141,6 @@
             opacity: 0.8;
         }
 
-        /* নতুন মোর ভিডিও বাটন স্টাইল */
         .more-videos-btn {
             display: block;
             width: 100%;
@@ -153,7 +152,6 @@
             text-align: center;
             font-size: 17px;
             font-weight: bold;
-            text-decoration: none;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 0 12px rgba(0, 229, 255, 0.4);
@@ -356,6 +354,51 @@
             text-decoration: underline;
             cursor: pointer;
         }
+
+        /* আরও মজার ভিডিও পেজের ডিজাইন */
+        #more-videos-page {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .videos-gallery {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .video-card {
+            width: 100%;
+            background-color: #002520;
+            border: 2px solid #00e5ff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .video-card video {
+            width: 100%;
+            max-height: 250px;
+            background-color: #000000;
+            object-fit: contain;
+        }
+
+        .video-card .card-title {
+            padding: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+            background-color: #001a17;
+            border-top: 1px solid #004d40;
+            word-break: break-all;
+        }
     </style>
 </head>
 <body>
@@ -367,6 +410,7 @@
     </div>
 
     <div class="container">
+        <!-- Step Section -->
         <div id="steps-section" style="width: 100%; display: flex; flex-direction: column; gap: 20px;">
             <div class="instruction-box">
                 <div class="title">নির্দেশনা</div>
@@ -378,10 +422,10 @@
             <button id="step3" class="step-btn locked" onclick="startProcess(3, 'https://example.com/step3')">Step 3 (Locked)</button>
             <button id="step4" class="step-btn locked" onclick="startProcess(4, 'https://example.com/step4')">Step 4 (Locked)</button>
             
-            <!-- নতুন বাটন (Step 4-এর নিচে) -->
-            <a href="https://example.com" target="_blank" class="more-videos-btn">আরও মজার ভিডিও দেখতে ক্লিক করুন 👈</a>
+            <button class="more-videos-btn" onclick="openMoreVideosPage()">আরও মজার ভিডিও দেখতে ক্লিক করুন 👈</button>
         </div>
 
+        <!-- Download Section -->
         <div id="download-section">
             <div class="video-container">
                 <video id="final-video" controls autoplay playsinline>
@@ -391,10 +435,10 @@
             <a id="main-download-btn" href="#" download class="small-download-btn">Download Now</a>
         </div>
 
+        <!-- Upload Page -->
         <div id="upload-page">
             <button class="back-btn" onclick="closeUploadPage()">← পিছনে ফিরে যান</button>
             
-            <!-- Video File Upload Section -->
             <div class="upload-block">
                 <div class="big-upload-btn" onclick="toggleFileUploadCard()">
                     <div class="btn-left-content">
@@ -416,7 +460,6 @@
                 </div>
             </div>
 
-            <!-- Link Input & Node.js Video Fetcher Section -->
             <div class="upload-block">
                 <div class="big-upload-btn">
                     <div class="btn-left-content">
@@ -440,6 +483,15 @@
                 </div>
             </div>
         </div>
+
+        <!-- More Videos Page (১৮টি ভিডিও দেখার স্থান) -->
+        <div id="more-videos-page">
+            <button class="back-btn" onclick="closeMoreVideosPage()">← পিছনে ফিরে যান</button>
+            <h3 style="color: #00e5ff; margin-bottom: 5px;">সব ভিডিওসমূহ</h3>
+            <div id="videos-gallery-list" class="videos-gallery">
+                <!-- ভিডিওগুলো এখানে সারিবদ্ধভাবে রেন্ডার হবে -->
+            </div>
+        </div>
     </div>
 
     <script>
@@ -448,14 +500,55 @@
         let currentStepNum = 0;
         let startTime = 0;
 
+        // Baby1 এবং Baby2 ফোল্ডারের ১৮টি ভিডিওর লিস্ট (প্রয়োজনে ফাইলের এক্সটেনশন .mp4 বা .mov নিশ্চিত করুন)
+        const staticFolderVideos = [
+            // Baby1 ফোল্ডারের ভিডিও (১ থেকে ৯)
+            { title: "বেবি ১", url: "Baby1/baby1.mp4" },
+            { title: "বেবি ২", url: "Baby1/baby2.mp4" },
+            { title: "বেবি ৩", url: "Baby1/baby3.mp4" },
+            { title: "বেবি ৪", url: "Baby1/baby4.mp4" },
+            { title: "বেবি ৫", url: "Baby1/baby5.mp4" },
+            { title: "বেবি ৬", url: "Baby1/baby6.mp4" },
+            { title: "বেবি ৭", url: "Baby1/baby7.mp4" },
+            { title: "বেবি ৮", url: "Baby1/baby8.mp4" },
+            { title: "বেবি ৯", url: "Baby1/baby9.mp4" },
+
+            // Baby2 ফোল্ডারের ভিডিও (১০ থেকে ১৮)
+            { title: "বেবি ১০", url: "Baby2/baby10.mp4" },
+            { title: "বেবি ১১", url: "Baby2/baby11.mp4" },
+            { title: "বেবি ১২", url: "Baby2/baby12.mp4" },
+            { title: "বেবি ১৩", url: "Baby2/baby13.mp4" },
+            { title: "বেবি ১৪", url: "Baby2/baby14.mp4" },
+            { title: "বেবি ১৫", url: "Baby2/baby15.mp4" },
+            { title: "বেবি ১৬", url: "Baby2/baby16.mp4" },
+            { title: "বেবি ১৭", url: "Baby2/baby17.mp4" },
+            { title: "বেবি ১৮", url: "Baby2/baby18.mp4" }
+        ];
+
+        let dynamicallyUploadedVideos = [];
+
         function openUploadPage() {
             document.getElementById('steps-section').style.display = 'none';
             document.getElementById('download-section').style.display = 'none';
+            document.getElementById('more-videos-page').style.display = 'none';
             document.getElementById('upload-page').style.display = 'flex';
         }
 
         function closeUploadPage() {
             document.getElementById('upload-page').style.display = 'none';
+            document.getElementById('steps-section').style.display = 'flex';
+        }
+
+        function openMoreVideosPage() {
+            document.getElementById('steps-section').style.display = 'none';
+            document.getElementById('download-section').style.display = 'none';
+            document.getElementById('upload-page').style.display = 'none';
+            document.getElementById('more-videos-page').style.display = 'flex';
+            renderVideosGallery();
+        }
+
+        function closeMoreVideosPage() {
+            document.getElementById('more-videos-page').style.display = 'none';
             document.getElementById('steps-section').style.display = 'flex';
         }
 
@@ -506,6 +599,11 @@
                 finalVideo.load();
 
                 document.getElementById('video-details-card').style.display = 'flex';
+
+                dynamicallyUploadedVideos.push({
+                    title: file.name,
+                    url: uploadedVideoUrl
+                });
             }
         }
 
@@ -551,6 +649,11 @@
                     
                     statusText.innerText = "লিংক জেনারেট ও ভিডিও প্লে সফল হয়েছে ✔";
                     statusText.style.color = "#66bb6a";
+
+                    dynamicallyUploadedVideos.push({
+                        title: targetUrl,
+                        url: data.direct_mp4
+                    });
                 } else {
                     statusText.innerText = "ভিডিও বের করা সম্ভব হয়নি ❌";
                     statusText.style.color = "#ef5350";
@@ -564,6 +667,24 @@
                 dlBtn.innerText = "Fetch & Play";
                 dlBtn.disabled = false;
             }
+        }
+
+        // ফোল্ডারের ১৮টি ভিডিও এবং নতুন আপলোড করা সব ভিডিও একসাথে দেখানোর ফাংশন
+        function renderVideosGallery() {
+            const galleryContainer = document.getElementById('videos-gallery-list');
+            galleryContainer.innerHTML = '';
+
+            const allVideos = [...dynamicallyUploadedVideos, ...staticFolderVideos];
+
+            allVideos.forEach((item) => {
+                const card = document.createElement('div');
+                card.className = 'video-card';
+                card.innerHTML = `
+                    <video src="${item.url}" controls playsinline preload="metadata"></video>
+                    <div class="card-title">${item.title}</div>
+                `;
+                galleryContainer.appendChild(card);
+            });
         }
 
         function startProcess(stepNum, targetUrl) {
@@ -634,6 +755,7 @@
                     clearInterval(runInterval);
                     document.getElementById('steps-section').style.display = 'none';
                     document.getElementById('upload-page').style.display = 'none';
+                    document.getElementById('more-videos-page').style.display = 'none';
                     document.getElementById('download-section').style.display = 'flex';
                 }
             }, 1000);
