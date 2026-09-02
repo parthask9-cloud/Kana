@@ -355,7 +355,6 @@
             cursor: pointer;
         }
 
-        /* আরও মজার ভিডিও পেজের লেআউট */
         #more-videos-page {
             display: none;
             width: 100%;
@@ -364,7 +363,6 @@
             gap: 15px;
         }
 
-        /* নতুন দুটি বাটন কন্টেইনার */
         .category-buttons-container {
             width: 100%;
             display: flex;
@@ -533,14 +531,13 @@
             <button class="back-btn" onclick="closeMoreVideosPage()">← পিছনে ফিরে যান</button>
             <h3 style="color: #00e5ff; margin-bottom: 5px;">সব ভিডিওসমূহ</h3>
             
-            <!-- যুক্ত করা দুটি বড় বাটন -->
             <div class="category-buttons-container">
                 <button class="category-big-btn" onclick="filterCategory('harun')">হারুন এর বউ</button>
                 <button class="category-big-btn" onclick="filterCategory('roij')">রইজ এর বউ</button>
             </div>
 
             <div id="videos-gallery-list" class="videos-gallery">
-                <!-- ভিডিও গ্রিড এখানে লোড হবে -->
+                <!-- ভিডিও গ্রিড লোড হবে -->
             </div>
         </div>
     </div>
@@ -551,28 +548,80 @@
         let currentStepNum = 0;
         let startTime = 0;
 
-        // Baby1 এবং Baby2 ফোল্ডারের ফাইলসমূহ
+        // সমস্ত ফোল্ডারের ফাইলসমূহ দিয়ে তৈরি ভিডিও লিস্ট
         const staticFolderVideos = [
-            { title: "বেবি", url: "Baby1/Baby.mp4", category: "harun" },
-            { title: "বেবি ১", url: "Baby1/Baby1.mp4", category: "harun" },
-            { title: "বেবি ২", url: "Baby1/Baby2.mp4", category: "harun" },
-            { title: "বেবি ৩", url: "Baby1/Baby3.mp4", category: "harun" },
-            { title: "বেবি ৪", url: "Baby1/Baby4.mp4", category: "harun" },
-            { title: "বেবি ৫", url: "Baby1/Baby5.mp4", category: "harun" },
-            { title: "বেবি ৬", url: "Baby1/Baby6.mp4", category: "harun" },
-            { title: "বেবি ৭", url: "Baby1/Baby7.mp4", category: "harun" },
-            { title: "বেবি ৮", url: "Baby1/Baby8.mp4", category: "harun" },
-            { title: "বেবি ৯", url: "Baby1/Baby9.mp4", category: "harun" },
-            { title: "বেবি ১০", url: "Baby1/Baby10.mp4", category: "harun" },
+            // --- ১. হারুন এর বউ (Baby2 ফোল্ডার) ---
+            { title: "Baby 11", url: "Baby2/Baby11.mp4", category: "harun" },
+            { title: "Baby 12", url: "Baby2/Baby12.mp4", category: "harun" },
+            { title: "Baby 13", url: "Baby2/Baby13.mp4", category: "harun" },
+            { title: "Baby 14", url: "Baby2/Baby14.mp4", category: "harun" },
+            { title: "Baby 16", url: "Baby2/Baby16.mp4", category: "harun" },
+            { title: "Baby 17", url: "Baby2/Baby17.mp4", category: "harun" },
+            { title: "Baby 18", url: "Baby2/Baby18.mp4", category: "harun" },
+            { title: "Baby 19", url: "Baby2/Baby19.mp4", category: "harun" },
+            { title: "Baby2 - 1", url: "Baby2/ssstwitter.com_1788197041481.mp4", category: "harun" },
+            { title: "Baby2 - 2", url: "Baby2/ssstwitter.com_1788249209850.mp4", category: "harun" },
+            { title: "Baby2 - 3", url: "Baby2/ssstwitter.com_1788283366753.mp4", category: "harun" },
 
-            { title: "বেবি ১১", url: "Baby2/Baby11.mp4", category: "roij" },
-            { title: "বেবি ১২", url: "Baby2/Baby12.mp4", category: "roij" },
-            { title: "বেবি ১৩", url: "Baby2/Baby13.mp4", category: "roij" },
-            { title: "বেবি ১৪", url: "Baby2/Baby14.mp4", category: "roij" },
-            { title: "বেবি ১৬", url: "Baby2/Baby16.mp4", category: "roij" },
-            { title: "বেবি ১৭", url: "Baby2/Baby17.mp4", category: "roij" },
-            { title: "বেবি ১৮", url: "Baby2/Baby18.mp4", category: "roij" },
-            { title: "বেবি ১৯", url: "Baby2/Baby19.mp4", category: "roij" }
+            // --- ২. রইজ এর বউ (Baby2 বাদে বাকি সব ফোল্ডার) ---
+            // Video1 Folder
+            { title: "Mal 1", url: "Video1/Mal1.mp4", category: "roij" },
+            { title: "Mal 3", url: "Video1/Mal3", category: "roij" },
+            { title: "Mal 4", url: "Video1/Mal4", category: "roij" },
+            { title: "Kaki 1", url: "Video1/kaki1.mp4", category: "roij" },
+            { title: "Mal 2", url: "Video1/mal2", category: "roij" },
+            { title: "Video1 - 1", url: "Video1/ssstwitter.com_1774120331717.mp4", category: "roij" },
+            { title: "Video1 - 2", url: "Video1/ssstwitter.com_1774411862673.mp4", category: "roij" },
+            { title: "Video1 - 3", url: "Video1/ssstwitter.com_1774412979116.mp4", category: "roij" },
+            { title: "Video1 - 4", url: "Video1/ssstwitter.com_1774499426971.mp4", category: "roij" },
+            { title: "Video1 - 5", url: "Video1/ssstwitter.com_1774501968219.mp4", category: "roij" },
+
+            // video2 Folder
+            { title: "video2 - 1", url: "video2/ssstwitter.com_1777970328038.mp4", category: "roij" },
+            { title: "video2 - 2", url: "video2/ssstwitter.com_1780355114959.mp4", category: "roij" },
+            { title: "video2 - 3", url: "video2/ssstwitter.com_1780418001956.mp4", category: "roij" },
+            { title: "video2 - 4", url: "video2/ssstwitter.com_1783011433996.mp4", category: "roij" },
+            { title: "video2 - 5", url: "video2/ssstwitter.com_1783531582537.mp4", category: "roij" },
+
+            // video3 Folder
+            { title: "video3 - 1", url: "video3/ssstwitter.com_1786813966370.mp4", category: "roij" },
+            { title: "video3 - 2", url: "video3/ssstwitter.com_1787350331062.mp4", category: "roij" },
+            { title: "video3 - 3", url: "video3/ssstwitter.com_1787510019229.mp4", category: "roij" },
+            { title: "video3 - 4", url: "video3/ssstwitter.com_1787515881919.mp4", category: "roij" },
+
+            // video3a Folder
+            { title: "video3a - 1", url: "video3a/ssstwitter.com_1785434254342.mp4", category: "roij" },
+            { title: "video3a - 2", url: "video3a/ssstwitter.com_1787519830762.mp4", category: "roij" },
+            { title: "video3a - 3", url: "video3a/ssstwitter.com_1787520436094.mp4", category: "roij" },
+            { title: "video3a - 4", url: "video3a/ssstwitter.com_1787520863229.mp4", category: "roij" },
+            { title: "video3a - 5", url: "video3a/ssstwitter.com_1787533127840.mp4", category: "roij" },
+            { title: "video3a - 6", url: "video3a/ssstwitter.com_1787533380169.mp4", category: "roij" },
+
+            // video4-Copy Folder
+            { title: "video4-Copy - 1", url: "video4-Copy/ssstwitter.com_1785485675993.mp4", category: "roij" },
+            { title: "video4-Copy - 2", url: "video4-Copy/ssstwitter.com_1787707166311.mp4", category: "roij" },
+            { title: "video4-Copy - 3", url: "video4-Copy/ssstwitter.com_1787707216959.mp4", category: "roij" },
+            { title: "video4-Copy - 4", url: "video4-Copy/ssstwitter.com_1787707250331.mp4", category: "roij" },
+            { title: "video4-Copy - 5", url: "video4-Copy/ssstwitter.com_1787707416937.mp4", category: "roij" },
+            { title: "video4-Copy - 6", url: "video4-Copy/ssstwitter.com_1787707953587.mp4", category: "roij" },
+
+            // video4 Folder
+            { title: "video4 - 1", url: "video4/ssstwitter.com_1787714915837.mp4", category: "roij" },
+            { title: "video4 - 2", url: "video4/ssstwitter.com_1787715099136.mp4", category: "roij" },
+            { title: "video4 - 3", url: "video4/ssstwitter.com_1787715587628.mp4", category: "roij" },
+            { title: "video4 - 4", url: "video4/ssstwitter.com_1787715319563.mp4", category: "roij" },
+
+            // video5 Folder
+            { title: "video5 - 1", url: "video5/ssstwitter.com_1785468917392.mp4", category: "roij" },
+            { title: "video5 - 2", url: "video5/ssstwitter.com_1785469500266.mp4", category: "roij" },
+            { title: "video5 - 3", url: "video5/ssstwitter.com_1785469771474.mp4", category: "roij" },
+
+            // video6 Folder
+            { title: "video6 - 1", url: "video6/ssstwitter.com_1774546672923.mp4", category: "roij" },
+            { title: "video6 - 2", url: "video6/ssstwitter.com_1774603325596.mp4", category: "roij" },
+            { title: "video6 - 3", url: "video6/ssstwitter.com_1777137531541.mp4", category: "roij" },
+            { title: "video6 - 4", url: "video6/ssstwitter.com_1777943442200.mp4", category: "roij" },
+            { title: "video6 - 5", url: "video6/ssstwitter.com_1777943515081.mp4", category: "roij" }
         ];
 
         let dynamicallyUploadedVideos = [];
