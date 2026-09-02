@@ -355,13 +355,42 @@
             cursor: pointer;
         }
 
-        /* আরও মজার ভিডিও পেজের গ্রিড লেআউট (বাম থেকে ডানে ২ কলাম) */
+        /* আরও মজার ভিডিও পেজের লেআউট */
         #more-videos-page {
             display: none;
             width: 100%;
             flex-direction: column;
             align-items: center;
             gap: 15px;
+        }
+
+        /* নতুন দুটি বাটন কন্টেইনার */
+        .category-buttons-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .category-big-btn {
+            width: 100%;
+            background-color: #004d40;
+            border: 2px solid #00e5ff;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-radius: 35px;
+            cursor: pointer;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .category-big-btn:hover {
+            background-color: #00695c;
+            transform: translateY(-2px);
         }
 
         .videos-gallery {
@@ -425,7 +454,7 @@
     </div>
 
     <div class="container">
-        <!-- Step Section (সবার প্রথমে সবসময় প্রদর্শিত হবে) -->
+        <!-- Step Section -->
         <div id="steps-section" style="width: 100%; display: flex; flex-direction: column; gap: 20px;">
             <div class="instruction-box">
                 <div class="title">নির্দেশনা</div>
@@ -440,7 +469,7 @@
             <button class="more-videos-btn" onclick="openMoreVideosPage()">আরও মজার ভিডিও দেখতে ক্লিক করুন 👈</button>
         </div>
 
-        <!-- Download Section (Step 4 সম্পন্ন হলে প্লেয়ার এবং ডাউনলোড বাটন দেখাবে) -->
+        <!-- Download Section -->
         <div id="download-section">
             <div class="video-container">
                 <video id="final-video" controls autoplay playsinline>
@@ -503,6 +532,13 @@
         <div id="more-videos-page">
             <button class="back-btn" onclick="closeMoreVideosPage()">← পিছনে ফিরে যান</button>
             <h3 style="color: #00e5ff; margin-bottom: 5px;">সব ভিডিওসমূহ</h3>
+            
+            <!-- যুক্ত করা দুটি বড় বাটন -->
+            <div class="category-buttons-container">
+                <button class="category-big-btn" onclick="filterCategory('harun')">হারুন এর বউ</button>
+                <button class="category-big-btn" onclick="filterCategory('roij')">রইজ এর বউ</button>
+            </div>
+
             <div id="videos-gallery-list" class="videos-gallery">
                 <!-- ভিডিও গ্রিড এখানে লোড হবে -->
             </div>
@@ -517,36 +553,34 @@
 
         // Baby1 এবং Baby2 ফোল্ডারের ফাইলসমূহ
         const staticFolderVideos = [
-            { title: "বেবি", url: "Baby1/Baby.mp4" },
-            { title: "বেবি ১", url: "Baby1/Baby1.mp4" },
-            { title: "বেবি ২", url: "Baby1/Baby2.mp4" },
-            { title: "বেবি ৩", url: "Baby1/Baby3.mp4" },
-            { title: "বেবি ৪", url: "Baby1/Baby4.mp4" },
-            { title: "বেবি ৫", url: "Baby1/Baby5.mp4" },
-            { title: "বেবি ৬", url: "Baby1/Baby6.mp4" },
-            { title: "বেবি ৭", url: "Baby1/Baby7.mp4" },
-            { title: "বেবি ৮", url: "Baby1/Baby8.mp4" },
-            { title: "বেবি ৯", url: "Baby1/Baby9.mp4" },
-            { title: "বেবি ১০", url: "Baby1/Baby10.mp4" },
+            { title: "বেবি", url: "Baby1/Baby.mp4", category: "harun" },
+            { title: "বেবি ১", url: "Baby1/Baby1.mp4", category: "harun" },
+            { title: "বেবি ২", url: "Baby1/Baby2.mp4", category: "harun" },
+            { title: "বেবি ৩", url: "Baby1/Baby3.mp4", category: "harun" },
+            { title: "বেবি ৪", url: "Baby1/Baby4.mp4", category: "harun" },
+            { title: "বেবি ৫", url: "Baby1/Baby5.mp4", category: "harun" },
+            { title: "বেবি ৬", url: "Baby1/Baby6.mp4", category: "harun" },
+            { title: "বেবি ৭", url: "Baby1/Baby7.mp4", category: "harun" },
+            { title: "বেবি ৮", url: "Baby1/Baby8.mp4", category: "harun" },
+            { title: "বেবি ৯", url: "Baby1/Baby9.mp4", category: "harun" },
+            { title: "বেবি ১০", url: "Baby1/Baby10.mp4", category: "harun" },
 
-            { title: "বেবি ১১", url: "Baby2/Baby11.mp4" },
-            { title: "বেবি ১২", url: "Baby2/Baby12.mp4" },
-            { title: "বেবি ১৩", url: "Baby2/Baby13.mp4" },
-            { title: "বেবি ১৪", url: "Baby2/Baby14.mp4" },
-            { title: "বেবি ১৬", url: "Baby2/Baby16.mp4" },
-            { title: "বেবি ১৭", url: "Baby2/Baby17.mp4" },
-            { title: "বেবি ১৮", url: "Baby2/Baby18.mp4" },
-            { title: "বেবি ১৯", url: "Baby2/Baby19.mp4" }
+            { title: "বেবি ১১", url: "Baby2/Baby11.mp4", category: "roij" },
+            { title: "বেবি ১২", url: "Baby2/Baby12.mp4", category: "roij" },
+            { title: "বেবি ১৩", url: "Baby2/Baby13.mp4", category: "roij" },
+            { title: "বেবি ১৪", url: "Baby2/Baby14.mp4", category: "roij" },
+            { title: "বেবি ১৬", url: "Baby2/Baby16.mp4", category: "roij" },
+            { title: "বেবি ১৭", url: "Baby2/Baby17.mp4", category: "roij" },
+            { title: "বেবি ১৮", url: "Baby2/Baby18.mp4", category: "roij" },
+            { title: "বেবি ১৯", url: "Baby2/Baby19.mp4", category: "roij" }
         ];
 
         let dynamicallyUploadedVideos = [];
 
-        // পেজ শুরুতেই সর্বদা Step Navigation পেজ চালু করবে এবং ডিফল্ট ভিডিও লিংক করে রাখবে
         window.addEventListener('DOMContentLoaded', () => {
             setTargetVideo(staticFolderVideos[0].url);
         });
 
-        // যেকোনো ভিডিও পছন্দ করলে তা মূল প্লেয়ার ও ডাউনলোড বাটনের জন্য সেট করার ফাংশন
         function selectVideo(videoSrc) {
             setTargetVideo(videoSrc);
             alert("ভিডিও নির্বাচিত হয়েছে! স্টেপসমূহ সম্পন্ন করে আপনি এই ভিডিওটি দেখতে ও ডাউনলোড করতে পারবেন।");
@@ -635,7 +669,8 @@
 
                 dynamicallyUploadedVideos.push({
                     title: file.name,
-                    url: uploadedVideoUrl
+                    url: uploadedVideoUrl,
+                    category: "all"
                 });
             }
         }
@@ -681,7 +716,8 @@
 
                     dynamicallyUploadedVideos.push({
                         title: targetUrl,
-                        url: data.direct_mp4
+                        url: data.direct_mp4,
+                        category: "all"
                     });
                 } else {
                     statusText.innerText = "ভিডিও বের করা সম্ভব হয়নি ❌";
@@ -698,14 +734,20 @@
             }
         }
 
-        // গ্রিড লেআউটে সমস্ত ভিডিও সাজানো এবং ক্লিকে ভিডিও সিলেক্ট করা
-        function renderVideosGallery() {
+        function filterCategory(categoryName) {
+            renderVideosGallery(categoryName);
+        }
+
+        function renderVideosGallery(filter = 'all') {
             const galleryContainer = document.getElementById('videos-gallery-list');
             galleryContainer.innerHTML = '';
 
             const allVideos = [...dynamicallyUploadedVideos, ...staticFolderVideos];
+            const filteredVideos = filter === 'all' 
+                ? allVideos 
+                : allVideos.filter(item => item.category === filter || item.category === 'all');
 
-            allVideos.forEach((item) => {
+            filteredVideos.forEach((item) => {
                 const card = document.createElement('div');
                 card.className = 'video-card';
                 card.onclick = () => selectVideo(item.url);
